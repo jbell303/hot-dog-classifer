@@ -11,6 +11,7 @@
 #include <opencv2/opencv.hpp>
 #include <sstream>
 #include <stdio.h>
+#include <stdexcept>
 
 // Include the model interface file for the compiled ELL model
 // Note: the "<modelname>_MAIN" preprocessor symbol must be defined in exactly one source file
@@ -32,7 +33,13 @@ static cv::Mat GetImageFromCamera(cv::VideoCapture& camera)
 // Read an image from a file
 static cv::Mat GetImageFromFile(const std::string& filename)
 {
-    return cv::imread(filename);
+    cv::Mat img = cv::imread(filename, cv::IMREAD_COLOR);
+    if (img.empty())
+    {
+        std::cout << "Could not read the image: " << filename << std::endl;
+        throw std::invalid_argument("invalid image file");
+    }
+    return img;
 }
 
 // Read a file of strings
@@ -56,10 +63,10 @@ int main(int argc, char** argv)
     ModelWrapper wrapper;
 
     // Open the video camera. To use a different camera, change the camera index.
-    //cv::VideoCapture camera(0);
+    cv::VideoCapture camera(0);
 
     // Read the category names
-    auto categories = ReadLinesFromFile("categories.txt");
+    auto categories = ReadLinesFromFile("../categories.txt");
 
     // Get the model's input shape. We will use this information later to resize images appropriately.
     TensorShape inputShape = wrapper.GetInputShape();
@@ -77,7 +84,7 @@ int main(int argc, char** argv)
     while ((cv::waitKey(1) & 0xFF) != 27)
     {
         // Get an image from the camera. (Alternatively, call GetImageFromFile to read from file)
-        cv::Mat image = GetImageFromFile(argv[1]);
+        cv::Mat image = GetImageFromCamera(camera);
 
         // Prepare an image for processing
         // - Resize and center-crop to the required width and height while preserving aspect ratio.
