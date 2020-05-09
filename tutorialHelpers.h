@@ -237,11 +237,11 @@ public:
     }
 
     // Draw a header text block on an image
-    static void DrawHeader(cv::Mat& image, const std::string& text)
+    static void DrawHeader(cv::Mat& image, const std::string& text, cv::Scalar color)
     {
         const int blockHeight = 40;
 
-        DrawTextBlock(image, text, cv::Point(0, 0), cv::Scalar(50, 200, 50), blockHeight);
+        DrawTextBlock(image, text, cv::Point(0, 0), color, blockHeight);
     }
 
     // Draw a footer text block on an image
