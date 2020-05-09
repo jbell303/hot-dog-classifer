@@ -1,1 +1,0 @@
-D:/Dropbox/ELL/build/bin/release/compile -imap model.ell -cfn Predict -cmn model --bitcode --target host -od model --fuseLinearOps True --optimizeReorderDataNodes True --header --blas true --optimize true --parallelize true --vectorize

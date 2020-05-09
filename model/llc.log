@@ -1,1 +1,0 @@
-D:/Dropbox/ELL/external/LLVMNativeWindowsLibs.x64.8.0.0-a/llvm-8.0/bin/llc.exe model\model.opt.bc -o model\model.o -O3 -filetype=obj -relocation-model=pic
