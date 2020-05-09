@@ -1,4 +1,4 @@
-# Hot Dog Classifer
+# Hot Dog Classifier
 Udacity C++ Nanodegree Capstone Project (Choice 1)
 
 
