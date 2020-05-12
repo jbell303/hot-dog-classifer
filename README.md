@@ -34,4 +34,4 @@ make
 cd ..
 ```
 ## Run the program
-`./hot-dog-classifier <path_to_image>`
+`./hot-dog-classifier -i <path to image> -c <path to categories.txt file>`
