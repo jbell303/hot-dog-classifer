@@ -35,3 +35,7 @@ cd ..
 ```
 ## Run the program
 `./hot-dog-classifier -i <path to image> -c <path to categories.txt file>`
+
+## Class Diagram
+![class diagram](https://github.com/jbell303/hot-dog-classifier/class_diagram.png "Class Diagram")
+
