@@ -10,19 +10,25 @@
 #define model_MAIN
 #include "model.h"
 
+// include helper definitions
+#include "tutorialHelpers.h";
+
 class Classifier {
 public:
+    // default constructor
+    Classifier() {};
+
     // constructor with image file
     Classifier(const std::string& imageFile, const std::string& categoryFile);
 
     // read an image from the camera
-    cv::Mat GetImageFromCamera(cv::VideoCapture& camera);
+    void GetImageFromCamera(cv::VideoCapture& camera);
 
     // read an image from a file
-    std::shared_ptr<cv::Mat> GetImageFromFile(const std::string& filename);
+    void GetImageFromFile(const std::string& filename);
 
     // read a file of strings
-    std::vector<std::string> ReadLinesFromFile(const std::string& filename);
+    void ReadLinesFromFile(const std::string& filename);
 
     std::vector<float> Predict();
 
@@ -30,9 +36,14 @@ public:
 
     std::vector<std::string> Categories();
 
+    void GetMetadata();
+
 private:
-    std::shared_ptr<cv::Mat> _image;
+    cv::Mat _image;
     std::vector<std::string> _categories;
     ModelWrapper _model;
+    tutorialHelpers::ImagePreprocessingMetadata _metadata;
+    TensorShape _inputShape;
+    std::vector<float> _predictions;
 };
 #endif // !HOT_DOG

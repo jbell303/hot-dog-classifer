@@ -5,6 +5,8 @@
 //  Authors:  Byron Changuion
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef HELPER
+#define HELPER
 
 #include <algorithm>
 #include <numeric>
@@ -252,3 +254,4 @@ public:
         DrawTextBlock(image, text, cv::Point(0, image.rows - blockHeight), cv::Scalar(200, 100, 100), blockHeight);
     }
 };
+#endif

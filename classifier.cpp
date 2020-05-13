@@ -10,18 +10,18 @@
 
 Classifier::Classifier(const std::string& imageFile, const std::string& categoryFile)
 {
-	_image = GetImageFromFile(imageFile);
-	_categories = ReadLinesFromFile(categoryFile);
+	GetImageFromFile(imageFile);
+	ReadLinesFromFile(categoryFile);
 }
 
-cv::Mat Classifier::GetImageFromCamera(cv::VideoCapture& camera)
+void Classifier::GetImageFromCamera(cv::VideoCapture& camera)
 {
 	cv::Mat frame;
 	camera >> frame;
-	return frame;
+	_image = frame;
 }
 
-std::shared_ptr<cv::Mat> Classifier::GetImageFromFile(const std::string& filename)
+void Classifier::GetImageFromFile(const std::string& filename)
 {
 	cv::Mat img;
 	try 
@@ -33,10 +33,10 @@ std::shared_ptr<cv::Mat> Classifier::GetImageFromFile(const std::string& filenam
 		std::cout << "could not read the image: " << filename << std::endl;
 		exit(0);
 	}
-	return std::make_shared<cv::Mat>(img);
+	_image = img;
 }
 
-std::vector<std::string> Classifier::ReadLinesFromFile(const std::string& filename)
+void Classifier::ReadLinesFromFile(const std::string& filename)
 {
 	std::vector<std::string> lines;
 	std::string line;
@@ -54,38 +54,40 @@ std::vector<std::string> Classifier::ReadLinesFromFile(const std::string& filena
 			if (line.length() > 0)
 				lines.emplace_back(line);
 		}
-		return lines;
+		_categories = lines;
 	}
+}
+
+void Classifier::GetMetadata()
+{
+	// get the model's input shape
+	_inputShape = _model.GetInputShape();
+	
+	// get the model's preprocessing data
+	_metadata = tutorialHelpers::GetImagePreprocessingMetadata(_model);
+	
+	// create a vector to hold the model's output predictions
+	_predictions = std::vector<float>(_model.GetOutputSize());
 }
 
 std::vector<float> Classifier::Predict()
 {
-	// get the model's input shape
-	TensorShape inputShape = _model.GetInputShape();
-
-	// get the model's preprocessing data
-	tutorialHelpers::ImagePreprocessingMetadata metadata = tutorialHelpers::GetImagePreprocessingMetadata(_model);
-
-	// create a vector to hold the model's output predictions
-	std::vector<float> predictions(_model.GetOutputSize());
-
 	// preprocess the image
-	auto input = tutorialHelpers::PrepareImageForModel(*_image, inputShape.columns, inputShape.rows, &metadata);
+	auto input = tutorialHelpers::PrepareImageForModel(_image, _inputShape.columns, _inputShape.rows, &_metadata);
 
 	// generate predictions
-	predictions = _model.Predict(input);
+	_predictions = _model.Predict(input);
 
-	return predictions;
+	return _predictions;
 }
 
 cv::Mat Classifier::Image()
 {
-	return *_image;
+	return _image;
 }
 
 std::vector<std::string> Classifier::Categories()
 {
 	return _categories;
 }
-
 
