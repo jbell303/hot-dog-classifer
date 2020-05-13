@@ -37,5 +37,29 @@ cd ..
 `./hot-dog-classifier -i <path to image> -c <path to categories.txt file>`
 
 ## Class Diagram
-<img src="https://github.com/jbell303/hot-dog-classifier/blob/master/class_diagram.png" alt="Class Diagram" style="width:100px;height:200px;">
+![class diagram](https://github.com/jbell303/hot-dog-classifier/blob/master/class_diagram.png "Class Diagram")
+
+## Expected behavior
+If user enters an image file as a command line argument, the classifier predicts the image as a hot dog or other class in the list of 1000 categories from the model. If the user does not provide an image filepath, the default camera is used and a prediction is run on each frame of video.
+
+## Rubric points
+### Loops, functions, I/O
+* functions and control structures: `main.cpp` line 47, 66 and others
+* file I/O: `main.cpp` line 51, 56
+* user input: `main.cpp` line 47 (command line arguments), line 66 (escape key to exit program)
+
+### Object Oriented Programming
+* OOP: `classifier.h`, `classifier.cpp`. The `classifier` class encapsulates functions from the ELL tutorial
+* Access specifiers: `classifier.h` line 17, 41
+* Member initialization lists: `classifier.h` line 22 (not currently used)
+* Abstraction: `classifier.cpp` line 73 (additional abstraction performed by helper class)
+* Encapsulation: `classifier.h` line 35 (getter function), line 42 (private member variables)
+* Function overload: `classifier.h` line 22 (not currently used)
+
+### Memory Management
+* Pass-by-referemce: `classifier.h` line 22, 25, 28, 31 (all but 22 present in original tutorial)
+* RAII: `classifier.cpp` line 70
+
+
+
 
