@@ -37,5 +37,5 @@ cd ..
 `./hot-dog-classifier -i <path to image> -c <path to categories.txt file>`
 
 ## Class Diagram
-<img src="/blob/master/class_diagram.png" alt="Class Diagram" style="width:100px;height:200px;">
+<img src="https://github.com/jbell303/blob/master/class_diagram.png" alt="Class Diagram" style="width:100px;height:200px;">
 
